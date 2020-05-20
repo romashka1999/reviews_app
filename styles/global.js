@@ -15,6 +15,14 @@ const globalStyles = StyleSheet.create({
     paragraph: {
         marginVertical: 8,
         lineHeight: 20,
+    },
+    input: {
+        borderWidth: 1,
+        borderBottomColor: 'black',
+        padding: 10,
+        borderRadius: 6,
+        fontSize: 18,
+        marginVertical: 10
     }
 });
 
@@ -23,10 +31,10 @@ export default globalStyles;
 
 export const images = {
     ratings: {
-      '1': require('../assets/rating-1.png'),
-      '2': require('../assets/rating-2.png'),
-      '3': require('../assets/rating-3.png'),
-      '4': require('../assets/rating-4.png'),
-      '5': require('../assets/rating-5.png'),
+        '1': require('../assets/rating-1.png'),
+        '2': require('../assets/rating-2.png'),
+        '3': require('../assets/rating-3.png'),
+        '4': require('../assets/rating-4.png'),
+        '5': require('../assets/rating-5.png'),
     }
-  };
+};

@@ -4,6 +4,7 @@ import { MaterialIcons }  from '@expo/vector-icons';
 
 import globalStyles from '../styles/global';
 import Card from '../shared/card';
+import ReviewForm from './reviewForm';
 
 const Home = (props) => {
 
@@ -24,9 +25,7 @@ const Home = (props) => {
                     size={50} 
                     style={ {...styles.modalToggle, ...styles.modalClose} }
                     onPress={() => setModalOpen(false)}/>
-                    <Card>
-                        <Text>Heelo</Text>
-                    </Card>
+                    <ReviewForm />
                 </View>
             </Modal>
 
@@ -51,7 +50,9 @@ const Home = (props) => {
 
 const styles = StyleSheet.create({
     modalContent: {
-        paddingHorizontal: 20
+        height: '50%',
+        width: '100%',
+        padding: 20
     },
     modalToggle: {
         marginBottom: 10,
