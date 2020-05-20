@@ -6,7 +6,8 @@ import globalStyles from '../styles/global';
 const About = () => {
     return (  
         <View style={globalStyles.container}>
-            <Text>About screen</Text>
+            <Text>This React Native App is very Funny :)</Text>
+            <Text>Author : Roman Chikhladze</Text>
         </View>
     );
 }

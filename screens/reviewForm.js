@@ -1,15 +1,32 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import globalStyles  from '../styles/global';
 import { Formik } from 'formik';
+import * as yup from 'yup';
 
-const ReviewForm = () => {
+import globalStyles  from '../styles/global';
+import FlatButton from '../shared/button';
+
+const ReviewSchema = yup.object({
+    title: yup.string().required().min(3),
+    body: yup.string().required().min(10),
+    rating: yup.string().required().test('is-num-1-5', 'Rating must be a number 1- 5', (val) => {
+        return parseInt(val) < 6 && parseInt(val) > 0;
+    })
+});
+
+const ReviewForm = ({ addReview }) => {
     return (  
         <View style={globalStyles.container}>
             <Text style={{...globalStyles.titleText, alignSelf: 'center', marginBottom: 10}}>Add Review</Text>
             <Formik
+                validationSchema={ReviewSchema}
                 initialValues={{title: '', body: '', rating: ''}}
-                onSubmit={(values) => { console.log(values);}}>
+                onSubmit={
+                    (values, actions) => { 
+                        actions.resetForm();
+                        addReview(values);
+                    }
+                }>
                 {
                     (formikProps) => (
                         <View>
@@ -17,25 +34,31 @@ const ReviewForm = () => {
                                 style={globalStyles.input}
                                 placeholder='Reviw title'
                                 onChangeText={formikProps.handleChange('title')}
-                                value={formikProps.values.title}/>
+                                value={formikProps.values.title}
+                                onBlur={formikProps.handleBlur('title')}/>
+                            <Text style={globalStyles.errorText}>{formikProps.touched.title && formikProps.errors.title}</Text>
+
                             <TextInput 
                                 multiline
                                 style={globalStyles.input}
                                 placeholder='Reviw body'
                                 onChangeText={formikProps.handleChange('body')}
-                                value={formikProps.values.body}/>
+                                value={formikProps.values.body}
+                                onBlur={formikProps.handleBlur('body')}/>
+                            <Text style={globalStyles.errorText}>{formikProps.touched.body && formikProps.errors.body}</Text>
+
                             <TextInput 
                                 style={globalStyles.input}
                                 placeholder='Reviw rating'
                                 onChangeText={formikProps.handleChange('rating')}
                                 value={formikProps.values.rating}
-                                keyboardType='numeric'/>
+                                keyboardType='numeric'
+                                onBlur={formikProps.handleBlur('rating')}/>
+                            <Text style={globalStyles.errorText}>{formikProps.touched.rating && formikProps.errors.rating}</Text>
 
-                            <Button 
-                                title='submit'
-                                color='maroon'
-                                onPress={formikProps.handleSubmit}
-                                style={styles.addButton}/>
+                            <FlatButton 
+                                text='submit'
+                                onPress={formikProps.handleSubmit}/>
                         </View>
                     )
                 }
@@ -44,11 +67,6 @@ const ReviewForm = () => {
     );
 }
 
-const styles = StyleSheet.create({
-    addButton: {
-
-    }
-});
 
  
 export default ReviewForm;

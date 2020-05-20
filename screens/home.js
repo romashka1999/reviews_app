@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { MaterialIcons }  from '@expo/vector-icons';
 
 import globalStyles from '../styles/global';
@@ -15,18 +15,28 @@ const Home = (props) => {
         { title: 'Not So "Final" Fantasy', rating: 3, body: 'lorem ipsum', key: 3 },
     ]);
 
+    const addReviewHandler = (review) => {
+        review.key = Math.random().toString();
+        setReviews((curReviews) => {
+            return [review, ...curReviews];
+        });
+        setModalOpen(false);
+    }   
+
     return (  
         <View style={globalStyles.container}>
 
             <Modal visible={modalOpen} animationType='slide'>
-                <View style={styles.modalContent}>
-                <MaterialIcons 
-                    name="close" 
-                    size={50} 
-                    style={ {...styles.modalToggle, ...styles.modalClose} }
-                    onPress={() => setModalOpen(false)}/>
-                    <ReviewForm />
-                </View>
+                <TouchableWithoutFeedback onPress={ () => Keyboard.dismiss()}>
+                    <View style={styles.modalContent}>
+                        <MaterialIcons 
+                            name="close" 
+                            size={50} 
+                            style={ {...styles.modalToggle, ...styles.modalClose} }
+                            onPress={() => setModalOpen(false)}/>
+                        <ReviewForm addReview={addReviewHandler}/>
+                    </View>
+                </TouchableWithoutFeedback>
             </Modal>
 
             <MaterialIcons 
@@ -50,9 +60,9 @@ const Home = (props) => {
 
 const styles = StyleSheet.create({
     modalContent: {
-        height: '50%',
+        height: '100%',
         width: '100%',
-        padding: 20
+        paddingHorizontal: 10,
     },
     modalToggle: {
         marginBottom: 10,

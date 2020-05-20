@@ -23,6 +23,12 @@ const globalStyles = StyleSheet.create({
         borderRadius: 6,
         fontSize: 18,
         marginVertical: 10
+    },
+    errorText: {
+        color: 'crimson',
+        fontWeight: 'bold',
+        alignSelf: 'flex-end',
+        marginBottom: 10
     }
 });
 
